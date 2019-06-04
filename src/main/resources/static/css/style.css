@@ -1,0 +1,34 @@
+.slide {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.animate-left {
+    position: relative;
+    animation: animateleft 0s
+}
+
+@keyframes animateleft {
+    from { left :-500px; opacity:0 } to { left:0; opacity:1 }
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;}
+#wrapper {
+    height: 92%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    position: fixed;
+    margin: 2% 0;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>IKL</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="slideshow" style="height: 100%; width: 60%; padding: 0 2%; float: left;">
+            <img th:each="image : ${images}"
+                 class="slide animate-left"
+                 th:src="${image}">
+        </div>
+        <div id="news" style="height: 100%; width: 35%; float: left; overflow-wrap: break-spaces;">
+            <h1>Aktuelles</h1>
+            Ferienspiele beim IKL?
+
+            Richtig gehört! In diesem Jahr bietet der IKL erstmals Ferienspiele an. Die Teilnahme ist sowohl für Vereinsmitglieder als auch für Nicht-Vereinsmitglieder möglich. Die Zahl der Plätze ist auf 40 begrenzt.
+
+            Du bist Schulkind und maximal 14 Jahren alt?
+            Du hast in der Woche vom 12. bis zum 16. August noch nichts vor?
+            Du magst Musik und wolltest dich immer schon mal ausprobieren?
+            Du spielst bereits ein Instrument oder singst im Chor?
+
+            Dann bist du bei uns genau richtig!
+
+            Und warum heißt das jetzt „musikalische“ Ferienspiele?
+
+            In dieser Woche dürft ihr euch bei uns einmal richtig musikalisch austoben. Nach einer Schnupperphase wählt ihr einen Workshop aus, der euch gefällt. Für angehende Sängerinnen und Sänger bieten wir einen Kinder-Projektchor an. Außerdem könnt ihr euch im Percussion Workshop an den verschiedenen Schlagwerkinstrumenten und den Boomwhackers ausprobieren. Falls ihr schon ein Instrument spiel, gibt es auch die Möglichkeit in einem Ensemble mit anderen Kindern zusammen neue Lieder kennenzulernen. Die Inhalte der Workshops werden entsprechend den Fähigkeiten der Teilnehmerinnen und Teilnehmer gewählt. Musikalische Vorkenntnisse sind keine Grundvoraussetzung für die Teilnahme.
+
+            Die Workshops umfassen jeweils zwei Vormittage. Zum Abschluss der Woche findet am Freitag, den 16.08.2019 ein Abschlusskonzert auf dem Vereinsgelände statt. Gerne darfst du dafür deine Familie und Freunde einladen.
+
+            Das erwartet euch an weiterem Programm in dieser Woche:
+
+            Natürlich steht der Spaß in dieser Woche im Vordergrund. Neben den musikalischen Workshops erwarten euch in dieser Woche viele weitere Programmpunkte wie etwa eine Farradrallye, Spiele- und Wasserolympiaden, Gelände- und Gruppenspiele, das Basteln von Instrumenten und unser eigener IKL-Escaperoom.
+
+            Wir freuen uns auf euch!
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var simpleSlides = function () {
+        var i;
+        var slides = document.getElementsByClassName("slide");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].setAttribute("style","display:none");
+        }
+        current++;
+        if (current >= slides.length) {
+            current = 0;
+        }
+
+        var currentSlide = slides[current];
+        if (currentSlide != null) {
+            currentSlide.setAttribute("style", "display:block");
+            setTimeout(simpleSlides, 2000);
+        }
+    };
+
+    var current = 0;
+    simpleSlides();
+
+</script>
+</html>
