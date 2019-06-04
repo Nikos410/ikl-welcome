@@ -34,8 +34,13 @@ public class ImageServiceImpl implements ImageService {
             final List<Path> allFiles = walk
                     .filter(Files::isRegularFile)
                     .collect(Collectors.toList());
-
-            return getBase64ForImage(allFiles.get(RANDOM.nextInt(allFiles.size())));
+            if (allFiles.isEmpty()) {
+                // TODO: Add placeholder image as resource
+                return null;
+            }
+            else {
+                return getBase64ForImage(allFiles.get(RANDOM.nextInt(allFiles.size())));
+            }
         } catch (IOException e) {
             LOG.error("Could not read image directory contents.", e);
             return null;
