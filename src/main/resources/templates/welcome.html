@@ -10,9 +10,7 @@
 <body>
     <div id="wrapper">
         <div id="slideshow" style="height: 100%; width: 60%; padding: 0 2%; float: left;">
-            <img th:each="image : ${images}"
-                 class="slide animate-left"
-                 th:src="${image}">
+            <img id="image" class="animate-left" src=""/>
         </div>
         <div id="news" style="height: 100%; width: 35%; float: left; overflow-wrap: break-spaces;">
             <h1>Aktuelles</h1>
@@ -43,26 +41,28 @@
 </body>
 
 <script type="text/javascript">
-    var simpleSlides = function () {
-        var i;
-        var slides = document.getElementsByClassName("slide");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].setAttribute("style","display:none");
-        }
-        current++;
-        if (current >= slides.length) {
-            current = 0;
-        }
+    function updateImage(base64)
+    {
+        // Clone and reinsert image to trigger keyframe animation again
+        var oldImage = document.getElementById("image");
+        var newImage = oldImage.cloneNode(true);
+        newImage.setAttribute("src", "data:image;base64, " + base64);
+        oldImage.parentNode.replaceChild(newImage, oldImage);
+    }
 
-        var currentSlide = slides[current];
-        if (currentSlide != null) {
-            currentSlide.setAttribute("style", "display:block");
-            setTimeout(simpleSlides, 2000);
-        }
-    };
+    function getNewImage() {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                updateImage(xmlHttp.responseText);
+        };
+        xmlHttp.open("GET", "/nextimage", true);
+        xmlHttp.send(null);
 
-    var current = 0;
-    simpleSlides();
+        setTimeout(getNewImage, 4000);
+    }
+
+    getNewImage();
 
 </script>
 </html>
