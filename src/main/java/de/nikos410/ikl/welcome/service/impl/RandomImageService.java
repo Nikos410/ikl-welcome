@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class ImageServiceImpl implements ImageService {
-    private static final Logger LOG = LoggerFactory.getLogger(ImageServiceImpl.class);
+public class RandomImageService implements ImageService {
+    private static final Logger LOG = LoggerFactory.getLogger(RandomImageService.class);
 
     private static final Path IMAGES_DIRECTORY = Paths.get("images/");
 
