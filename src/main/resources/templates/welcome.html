@@ -9,8 +9,8 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="slideshow" style="height: 100%; width: 60%; padding: 0 2%; float: left;">
-            <img id="image" class="animate-left" src=""/>
+        <div id="slideshow" style="height: 100%; width: 60%; padding: 0 2%; float: left; text-align: center;">
+            <img id="slide" class="slide animate-left" src=""/>
         </div>
         <div id="news" style="height: 100%; width: 35%; float: left; overflow-wrap: break-spaces;">
             <h1>Aktuelles</h1>
@@ -44,7 +44,7 @@
     function updateImage(base64)
     {
         // Clone and reinsert image to trigger keyframe animation again
-        var oldImage = document.getElementById("image");
+        var oldImage = document.getElementById("slide");
         var newImage = oldImage.cloneNode(true);
         newImage.setAttribute("src", "data:image;base64, " + base64);
         oldImage.parentNode.replaceChild(newImage, oldImage);
