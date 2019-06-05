@@ -3,12 +3,15 @@ package de.nikos410.ikl.welcome.service.impl;
 import de.nikos410.ikl.welcome.exception.StorageException;
 import de.nikos410.ikl.welcome.service.StorageService;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -83,6 +86,24 @@ public class StorageServiceImpl implements StorageService {
             return new String(base64);
         } catch (IOException e) {
             throw new StorageException("Could not read image " + image, e);
+        }
+    }
+
+    @Override
+    public Resource getImageAsResource(Path image) {
+        try {
+            Resource resource = new UrlResource(IMAGES_ROOT.resolve(image).toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new StorageException(
+                        "Could not read file " + image);
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new StorageException("Could not read file " + image, e);
         }
     }
 }

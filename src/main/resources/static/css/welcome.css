@@ -3,8 +3,9 @@ html,body{
     padding: 0;
     height: 100%;
     width: 100%;
-    overflow: hidden;}
-#wrapper {
+}
+
+#container {
     height: 92%;
     width: 100%;
     left: 0;
@@ -30,4 +31,23 @@ html,body{
 
 @keyframes animateleft {
     from { left :-500px; opacity:0 } to { left:0; opacity:1 }
+}
+
+.jumbotron{
+    padding: 1rem 2rem 2rem 2rem;
+}
+
+#news {
+    height: 100%;
+    width: 38%;
+    float: left;
+    overflow-wrap: break-spaces;
+}
+
+#slideshow {
+    height: 100%;
+    width: 60%;
+    padding: 0 2%;
+    float: left;
+    text-align: center;
 }

@@ -17,4 +17,6 @@ public interface StorageService {
     void deleteOne(Path image);
 
     String getImageAsBase64(Path image);
+
+    Resource getImageAsResource(Path image);
 }

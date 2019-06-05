@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>IKL</title>
+
+    <!-- Dropzone -->
+    <link rel="stylesheet" type="text/css" href="css/dropzone.css">
+    <script src="js/dropzone.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+
+    <!-- Enable Dropzone -->
+    <script>
+        $(function () {
+            $("#my-dropzone").dropzone({});
+        });
+    </script>
+</head>
+<body>
+<div style="width: 90%; margin-left: 5%; padding-top: 5%; float: left;">
+    <div class="jumbotron" style="text-align: center;">
+        <h1>Neue Bilder hochladen</h1>
+
+        <br>
+
+        <form th:action="@{/admin/upload}" class="dropzone dz-clickable" id="my-dropzone">
+            <div class="dz-message d-flex flex-column">
+                <i class="material-icons text-muted">cloud_upload</i>
+                Bild(er) hier hin ziehen oder klicken
+            </div>
+        </form>
+    </div>
+
+    <div class="jumbotron" style="margin-top: 5%;">
+
+        <span style="text-align: center">
+            <h1>Alle Bilder</h1>
+        </span>
+
+        TODO
+    </div>
+</div>
+</body>
+</html>
