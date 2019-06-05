@@ -12,7 +12,6 @@
 
     <!-- Bootstrap -->
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,6 +19,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/admin.css">
 
+    <script>
+        Dropzone.options.imageDropzone = {
+            maxFilesize: 24, // MB
+            timeout: 120000, // ms
+            acceptedFiles: "image/*"
+        };
+    </script>
 </head>
 <body>
 <div style="width: 90%; margin-left: 5%; padding-top: 5%; float: left;">
@@ -28,7 +34,7 @@
 
         <br>
 
-        <form th:action="@{/admin/upload}" class="dropzone dz-clickable" id="my-dropzone">
+        <form th:action="@{/admin/upload}" class="dropzone dz-clickable" id="image-dropzone">
             <div class="dz-message d-flex flex-column">
                 <i class="material-icons text-muted">cloud_upload</i>
                 Bild(er) hier hin ziehen oder klicken
