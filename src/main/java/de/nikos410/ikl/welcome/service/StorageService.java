@@ -10,7 +10,7 @@ public interface StorageService {
 
     void init();
 
-    Path store(MultipartFile file);
+    void store(MultipartFile file);
 
     List<Path> findAll();
 

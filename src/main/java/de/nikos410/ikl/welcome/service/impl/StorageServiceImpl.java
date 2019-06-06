@@ -1,12 +1,15 @@
 package de.nikos410.ikl.welcome.service.impl;
 
+import de.nikos410.ikl.welcome.database.ImageRepository;
 import de.nikos410.ikl.welcome.exception.StorageException;
+import de.nikos410.ikl.welcome.model.Image;
 import de.nikos410.ikl.welcome.service.StorageService;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +24,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class StorageServiceImpl implements StorageService {
+    private static final Logger LOG = LoggerFactory.getLogger(StorageServiceImpl.class);
     private static final Path IMAGES_ROOT = Paths.get("images");
+
+    private final ImageRepository imageRepository;
+
+    public StorageServiceImpl(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
 
     @Override
     public void init() {
+        // TODO: Check if all files have an entry in database
         try {
             Files.createDirectories(IMAGES_ROOT);
         } catch (IOException e) {
@@ -33,7 +44,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Path store(MultipartFile file) {
+    public void store(MultipartFile file) {
         final String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
@@ -50,7 +61,9 @@ public class StorageServiceImpl implements StorageService {
             Files.copy(file.getInputStream(), newPath,
                     StandardCopyOption.REPLACE_EXISTING);
 
-            return newPath;
+            final Image newImage = new Image();
+            newImage.setFile(IMAGES_ROOT.relativize(newPath).toString());
+            imageRepository.save(newImage);
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
         }
