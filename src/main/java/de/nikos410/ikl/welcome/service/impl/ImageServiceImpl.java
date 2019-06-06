@@ -38,7 +38,7 @@ public class ImageServiceImpl implements ImageService {
         Path nextImage = null;
 
         if (allFiles.isEmpty()) {
-            // TODO: Add placeholder image as resource
+            return null;
         }
         else if (allFiles.size() == 1) {
             nextImage = allFiles.get(0);

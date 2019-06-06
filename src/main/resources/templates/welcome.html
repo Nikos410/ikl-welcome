@@ -37,7 +37,7 @@
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             var nextImage = xmlHttp.responseText;
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200 && nextImage != null) {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200 && nextImage != null && nextImage !== "") {
                 hiddenSlide.setAttribute("src", "/images/" + nextImage);
             }
             else {

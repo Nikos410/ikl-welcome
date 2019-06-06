@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.nio.file.Path;
+
 @Controller
 public class IklWelcomeController {
 
@@ -27,6 +29,7 @@ public class IklWelcomeController {
     @GetMapping("/nextimage")
     @ResponseBody
     public String nextImage() {
-        return imageService.getNextImage().toString();
+        final Path nextImage = imageService.getNextImage();
+        return nextImage == null ? null : nextImage.toString();
     }
 }
