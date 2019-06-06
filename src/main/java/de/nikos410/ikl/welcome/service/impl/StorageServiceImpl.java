@@ -31,15 +31,34 @@ public class StorageServiceImpl implements StorageService {
 
     public StorageServiceImpl(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
+        init();
     }
 
     @Override
     public void init() {
-        // TODO: Check if all files have an entry in database
         try {
             Files.createDirectories(IMAGES_ROOT);
         } catch (IOException e) {
             throw new StorageException("Could not initialize images directory.", e);
+        }
+
+        // Check for images missing in database
+        for (Path current : findAll()) {
+            final Image result = imageRepository.findOneByFile(current.toString());
+            if (result == null) {
+                LOG.warn("Image {} not found in database. Adding to database.", current);
+                final Image toAdd = new Image();
+                toAdd.setFile(current.toString());
+                imageRepository.save(toAdd);
+            }
+        }
+
+        // Check for images missing on disk
+        for (Image current : imageRepository.findAll()) {
+            if (!Files.exists(IMAGES_ROOT.resolve(current.getFile()))) {
+                LOG.warn("Image {} not found on disk. Removing from database.", current.getFile());
+                imageRepository.delete(current);
+            }
         }
     }
 
@@ -86,6 +105,8 @@ public class StorageServiceImpl implements StorageService {
     public void deleteOne(final Path path) {
         try {
             Files.delete(path);
+            final Image image = imageRepository.findOneByFile(path.toString());
+            imageRepository.delete(image);
         } catch (IOException e) {
             throw new StorageException("Could not delete image " + path, e);
         }
