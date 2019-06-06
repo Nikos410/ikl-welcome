@@ -26,7 +26,7 @@ html,body{
 
 
 .animate-left {
-    animation: animateleft 1s
+    animation: animateleft 1.5s
 }
 
 @keyframes animateleft {
