@@ -1,8 +1,10 @@
 package de.nikos410.ikl.welcome.controller;
 
+import de.nikos410.ikl.welcome.model.Image;
 import de.nikos410.ikl.welcome.service.ImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.nio.file.Path;
@@ -29,7 +31,13 @@ public class IklWelcomeController {
     @GetMapping("/nextimage")
     @ResponseBody
     public String nextImage() {
-        final Path nextImage = imageService.getNextImage();
-        return nextImage == null ? null : nextImage.toString();
+        final Image nextImage = imageService.getNextImage();
+        return nextImage == null ? null : nextImage.getFile();
+    }
+
+    @GetMapping("/images/{fileName}/getinfo")
+    @ResponseBody
+    public String getInfoForImage(@PathVariable String fileName) {
+        return imageService.getInfoForImage(fileName);
     }
 }

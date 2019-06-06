@@ -1,11 +1,10 @@
 package de.nikos410.ikl.welcome.service.impl;
 
+import de.nikos410.ikl.welcome.database.ImageRepository;
+import de.nikos410.ikl.welcome.model.Image;
 import de.nikos410.ikl.welcome.service.ImageService;
-import de.nikos410.ikl.welcome.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
@@ -13,13 +12,12 @@ import java.util.Random;
 public class ImageServiceImpl implements ImageService {
     private static final Random RANDOM = new Random();
 
-    private final StorageService storageService;
+    private ImageRepository imageRepository;
 
-    private Path currentImage;
+    private Image currentImage;
 
-    @Autowired
-    public ImageServiceImpl(StorageService storageService) {
-        this.storageService = storageService;
+    public ImageServiceImpl(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
     }
 
     /**
@@ -28,24 +26,27 @@ public class ImageServiceImpl implements ImageService {
      * @return The file encoded as base64
      */
     @Override
-    public Path getNextImage() {
+    public Image getNextImage() {
         return getRandomImage();
-
     }
 
-    private Path getRandomImage() {
-        final List<Path> allFiles = storageService.findAll();
-        Path nextImage = null;
+    @Override
+    public String getInfoForImage(String fileName) {
+        final Image result = imageRepository.findOneByFile(fileName);
+        return result == null ? null : result.getInfo();
+    }
 
-        if (allFiles.isEmpty()) {
+    private Image getRandomImage() {
+        final List<Image> allImages = imageRepository.findAll();
+        Image nextImage = null;
+
+        if (allImages.isEmpty()) {
             return null;
-        }
-        else if (allFiles.size() == 1) {
-            nextImage = allFiles.get(0);
-        }
-        else {
+        } else if (allImages.size() == 1) {
+            nextImage = allImages.get(0);
+        } else {
             while (nextImage == null || nextImage.equals(this.currentImage)) {
-                nextImage = allFiles.get(RANDOM.nextInt(allFiles.size()));
+                nextImage = allImages.get(RANDOM.nextInt(allImages.size()));
             }
         }
 
