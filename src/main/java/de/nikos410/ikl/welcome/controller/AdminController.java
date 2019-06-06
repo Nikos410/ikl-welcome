@@ -4,17 +4,11 @@ import de.nikos410.ikl.welcome.exception.StorageException;
 import de.nikos410.ikl.welcome.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.nio.file.Paths;
 
 @Controller
 public class AdminController {
@@ -43,23 +37,5 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/admin";
-    }
-
-    @GetMapping("/images/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveImage(@PathVariable String filename) {
-        Resource file = storageService.getImageAsResource(Paths.get(filename));
-        final String extension = filename.substring(filename.lastIndexOf(".") + 1);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.valueOf("image/" + extension))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "inline; filename=\"" + file.getFilename() + "\"")
-                .body(file);
-    }
-
-    @PostMapping("/images/{filename:.+}/delete")
-    public void deleteImage(@PathVariable String filename) {
-        storageService.deleteOne(Paths.get(filename));
     }
 }

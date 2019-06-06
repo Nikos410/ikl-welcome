@@ -27,6 +27,6 @@ public class IklWelcomeController {
     @GetMapping("/nextimage")
     @ResponseBody
     public String nextImage() {
-        return imageService.getNextImageBase64();
+        return imageService.getNextImage().toString();
     }
 }

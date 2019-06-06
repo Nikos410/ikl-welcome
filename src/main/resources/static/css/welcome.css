@@ -21,11 +21,11 @@ html,body{
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+    position: relative;
 }
 
 
 .animate-left {
-    position: relative;
     animation: animateleft 1s
 }
 

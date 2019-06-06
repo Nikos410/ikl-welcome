@@ -15,7 +15,8 @@
 <body>
     <div id="container">
         <div id="slideshow">
-            <img id="slide" class="slide animate-left" src=""/>
+            <img id="slideA" class="slide animate-left" th:src="@{/assets/fallback.jpg}"/>
+            <img id="slideB" class="slide animate-left" th:src="@{/assets/fallback.jpg}" style="display: none;"/>
         </div>
 
         <div id="news" class="jumbotron">
@@ -28,28 +29,49 @@
 </body>
 
 <script type="text/javascript">
-    function updateImage(base64)
-    {
-        // Clone and reinsert image to trigger keyframe animation again
-        var oldImage = document.getElementById("slide");
-        var newImage = oldImage.cloneNode(true);
-        newImage.setAttribute("src", "data:image;base64, " + base64);
-        oldImage.parentNode.replaceChild(newImage, oldImage);
-    }
+    var currentSlide = "A";
+    var displayedSlide = document.getElementById("slideA");
+    var hiddenSlide = document.getElementById("slideB");
 
-    function getNewImage() {
+    function getNextImage() {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                updateImage(xmlHttp.responseText);
+            var nextImage = xmlHttp.responseText;
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200 && nextImage != null) {
+                hiddenSlide.setAttribute("src", "/images/" + nextImage);
+            }
+            else {
+                hiddenSlide.setAttribute("src", "/assets/fallback.jpg");
+            }
         };
-        xmlHttp.open("GET", "/nextimage", true);
+        xmlHttp.open("GET", "/nextimage", true); // true for asynchronous
         xmlHttp.send(null);
-
-        setTimeout(getNewImage, 10000);
     }
 
-    getNewImage();
+    function displayNextSlide() {
+        if (currentSlide == "A") {
+            hiddenSlide = document.getElementById("slideA");
+            displayedSlide = document.getElementById("slideB");
+
+            currentSlide = "B";
+        }
+        else {
+            hiddenSlide = document.getElementById("slideB");
+            displayedSlide = document.getElementById("slideA");
+
+            currentSlide = "A"
+        }
+
+        // Hide previous slide
+        hiddenSlide.style.display = "none";
+        // Show the other slide
+        displayedSlide.style.display = "inline";
+        // Update image for hidden slide
+        getNextImage();
+    }
+
+    displayNextSlide();
+    setInterval(displayNextSlide, 4000);
 
 </script>
 </html>

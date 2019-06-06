@@ -28,11 +28,9 @@ public class ImageServiceImpl implements ImageService {
      * @return The file encoded as base64
      */
     @Override
-    public String getNextImageBase64() {
-        final Path nextImage = getRandomImage();
+    public Path getNextImage() {
+        return getRandomImage();
 
-        currentImage = nextImage;
-        return storageService.getImageAsBase64(nextImage);
     }
 
     private Path getRandomImage() {
