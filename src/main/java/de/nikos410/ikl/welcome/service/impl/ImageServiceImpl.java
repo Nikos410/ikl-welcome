@@ -49,6 +49,7 @@ public class ImageServiceImpl implements ImageService {
             }
         }
 
+        currentImage = nextImage;
         return nextImage;
     }
 }
