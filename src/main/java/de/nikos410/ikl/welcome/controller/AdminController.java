@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.file.Paths;
+
 @Controller
 public class AdminController {
     private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
@@ -37,5 +39,10 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/admin";
+    }
+
+    @PostMapping("/images/{filename:.+}/delete")
+    public void deleteImage(@PathVariable String filename) {
+        storageService.deleteOne(Paths.get(filename));
     }
 }
