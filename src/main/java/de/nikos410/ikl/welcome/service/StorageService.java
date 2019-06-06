@@ -12,9 +12,11 @@ public interface StorageService {
 
     void store(MultipartFile file);
 
-    List<Path> findAll();
+    List<Path> findAllOnDisk();
 
     void deleteOne(Path image);
+
+    void deleteOne(Long id);
 
     String getImageAsBase64(Path image);
 

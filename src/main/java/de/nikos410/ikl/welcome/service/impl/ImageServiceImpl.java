@@ -36,6 +36,18 @@ public class ImageServiceImpl implements ImageService {
         return result == null ? null : result.getInfo();
     }
 
+    @Override
+    public void setInfoForImage(Long id, String info) {
+        final Image result = imageRepository.findOneById(id);
+        result.setInfo(info);
+        imageRepository.save(result);
+    }
+
+    @Override
+    public List<Image> findAll() {
+        return imageRepository.findAll();
+    }
+
     private Image getRandomImage() {
         final List<Image> allImages = imageRepository.findAll();
         Image nextImage = null;

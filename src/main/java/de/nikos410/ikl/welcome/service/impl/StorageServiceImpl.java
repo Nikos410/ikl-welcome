@@ -43,7 +43,7 @@ public class StorageServiceImpl implements StorageService {
         }
 
         // Check for images missing in database
-        for (Path current : findAll()) {
+        for (Path current : findAllOnDisk()) {
             final Image result = imageRepository.findOneByFile(current.toString());
             if (result == null) {
                 LOG.warn("Image {} not found in database. Adding to database.", current);
@@ -89,7 +89,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public List<Path> findAll() {
+    public List<Path> findAllOnDisk() {
         try {
             return Files.walk(IMAGES_ROOT, 1)
                     .filter(path -> !path.equals(IMAGES_ROOT))
@@ -104,11 +104,26 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public void deleteOne(final Path path) {
         try {
-            Files.delete(path);
+            Files.delete(IMAGES_ROOT.resolve(path));
             final Image image = imageRepository.findOneByFile(path.toString());
             imageRepository.delete(image);
         } catch (IOException e) {
             throw new StorageException("Could not delete image " + path, e);
+        }
+    }
+
+    @Override
+    public void deleteOne(final Long id) {
+        try {
+            final Image image = imageRepository.findOneById(id);
+            if (image == null) {
+                throw new IllegalArgumentException("Image not found. ID:  " + id);
+            }
+
+            Files.delete(IMAGES_ROOT.resolve(image.getFile()));
+            imageRepository.delete(image);
+        } catch (IOException e) {
+            throw new StorageException("Could not delete image. ID: " + id, e);
         }
     }
 
