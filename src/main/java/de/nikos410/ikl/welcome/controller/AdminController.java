@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.nio.file.Paths;
-
 @Controller
 public class AdminController {
     private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
@@ -27,12 +25,17 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String adminPanel(Model model) {
-        model.addAttribute("allImages", imageService.findAll());
-        return "admin";
+    public String admin() {
+        return "redirect:/admin/images";
     }
 
-    @PostMapping("/admin/upload")
+    @GetMapping("/admin/images")
+    public String adminImages(Model model) {
+        model.addAttribute("allImages", imageService.findAll());
+        return "adminImages";
+    }
+
+    @PostMapping("/admin/images/upload")
     public String handleImageUpload(@RequestParam("file") MultipartFile uploadedImage, RedirectAttributes redirectAttributes) {
         try {
             storageService.store(uploadedImage);
@@ -45,13 +48,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/images/{id}/setinfo")
+    @PostMapping("/admin/images/{id}/setinfo")
     public ResponseEntity setInfo(@PathVariable Long id, @RequestParam String info) {
         imageService.setInfoForImage(id, info);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/images/{id}/delete")
+    @PostMapping("/admin/images/{id}/delete")
     public ResponseEntity deleteImage(@PathVariable Long id) {
         storageService.deleteOne(id);
         return ResponseEntity.ok().build();

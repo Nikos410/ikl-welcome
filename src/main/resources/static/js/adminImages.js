@@ -21,7 +21,7 @@ function setInfo(id) {
     var info = input.value;
 
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/images/" + id + "/setinfo", true);
+    xmlHttp.open("POST", "/admin/images/" + id + "/setinfo", true);
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xmlHttp.onreadystatechange = function() {
@@ -42,7 +42,7 @@ function setInfo(id) {
 
 function deleteImage(id) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/images/" + id + "/delete", true);
+    xmlHttp.open("POST", "/admin/images/" + id + "/delete", true);
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.status == 200) {
             // Remove the deleted element
