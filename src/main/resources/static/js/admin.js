@@ -1,7 +1,7 @@
 // Configure Dropzone
 Dropzone.options.imageDropzone = {
     maxFilesize: 24, // MB
-    timeout: 120000, // ms
+    timeout: 240000, // ms
     acceptedFiles: "image/*"
 };
 
@@ -10,9 +10,7 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
         trigger: 'hover'
     });
-});
 
-$(document).ready(function(){
     $('[data-toggle="popover-manual"]').popover({
         trigger: 'manual'
     });
