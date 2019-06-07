@@ -53,6 +53,7 @@ html,body{
 }
 
 .toast {
+    max-width: 52%;
     position: absolute;
     bottom: 2%;
     left: 4%;
@@ -60,5 +61,5 @@ html,body{
 }
 
 .toast-body {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
