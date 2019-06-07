@@ -4,16 +4,22 @@
     background: #f5f5f5;
 }
 
-.dropzone i{
+.dropzone i {
     font-size: 5rem;
 }
 
 .dropzone .dz-message {
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, .54);
     font-weight: 500;
     font-size: initial;
 }
 
-.jumbotron{
+.jumbotron {
     padding: 1rem 2rem 2rem 2rem;
+}
+
+.image {
+    width: 100%;
+    max-height: 8rem;
+    object-fit: cover;
 }

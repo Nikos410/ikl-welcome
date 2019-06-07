@@ -51,12 +51,14 @@
         <div th:each="image : ${allImages}"
              class="card"
              style="margin-top: 1%;"
-            th:id="'image-card-' + ${image.id}">
+             th:id="'image-card-' + ${image.id}">
             <div class="card-body">
                 <div class="row">
                     <div class="col-3">
-                        <img style="width: 100%; max-height: 8rem; object-fit: cover;"
-                             th:src="@{'/images/' + ${image.file}}"/>
+                        <a th:href="@{'/images/' + ${image.file}}">
+                            <img class="image"
+                                 th:src="@{'/images/' + ${image.file}}"/>
+                        </a>
                     </div>
                     <div class="col-8">
                         <div class="input-group mb-3">
