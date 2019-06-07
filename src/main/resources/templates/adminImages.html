@@ -54,13 +54,13 @@
              th:id="'image-card-' + ${image.id}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <a th:href="@{'/images/' + ${image.file}}">
                             <img class="image"
                                  th:src="@{'/images/' + ${image.file}}"/>
                         </a>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
                         <div class="input-group mb-3">
                             <input type="text"
                                    class="form-control"
