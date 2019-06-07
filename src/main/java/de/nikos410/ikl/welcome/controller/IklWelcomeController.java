@@ -30,9 +30,8 @@ public class IklWelcomeController {
 
     @GetMapping("/nextimage")
     @ResponseBody
-    public String nextImage() {
-        final Image nextImage = imageService.getNextImage();
-        return nextImage == null ? null : nextImage.getFile();
+    public Image nextImage() {
+        return imageService.getNextImage();
     }
 
     @GetMapping("/images/{fileName}/getinfo")

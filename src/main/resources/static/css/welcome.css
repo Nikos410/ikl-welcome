@@ -51,3 +51,14 @@ html,body{
     float: left;
     text-align: center;
 }
+
+.toast {
+    position: absolute;
+    bottom: 2%;
+    left: 4%;
+    display: none;
+}
+
+.toast-body {
+    font-size: 1rem;
+}
