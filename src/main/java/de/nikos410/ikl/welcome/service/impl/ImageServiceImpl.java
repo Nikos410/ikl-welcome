@@ -14,7 +14,7 @@ public class ImageServiceImpl implements ImageService {
 
     private ImageRepository imageRepository;
 
-    private Image currentImage;
+    private long currentImage = -1;
 
     public ImageServiceImpl(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -57,12 +57,12 @@ public class ImageServiceImpl implements ImageService {
         } else if (allImages.size() == 1) {
             nextImage = allImages.get(0);
         } else {
-            while (nextImage == null || nextImage.equals(this.currentImage)) {
+            while (nextImage == null || currentImage  == nextImage.getId()) {
                 nextImage = allImages.get(RANDOM.nextInt(allImages.size()));
             }
         }
 
-        currentImage = nextImage;
+        currentImage = nextImage.getId();
         return nextImage;
     }
 }
