@@ -1,23 +1,18 @@
 package de.nikos410.ikl.welcome.controller;
 
-import de.nikos410.ikl.welcome.exception.StorageException;
 import de.nikos410.ikl.welcome.model.NewsArticle;
 import de.nikos410.ikl.welcome.service.ImageService;
 import de.nikos410.ikl.welcome.service.NewsService;
 import de.nikos410.ikl.welcome.service.StorageService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
-    private static final Logger LOG = LoggerFactory.getLogger(AdminController.class);
-
     private final StorageService storageService;
     private final ImageService imageService;
     private final NewsService newsService;
@@ -28,12 +23,12 @@ public class AdminController {
         this.newsService = newsService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("")
     public String admin() {
         return "redirect:/admin/images";
     }
 
-    @GetMapping("/admin/images")
+    @GetMapping("/images")
     public String adminImages(Model model) {
         model.addAttribute("allImages", imageService.findAll());
         return "adminImages";
@@ -45,19 +40,19 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/admin/images/{id}/setinfo")
+    @PostMapping("/images/{id}/setinfo")
     public ResponseEntity setInfo(@PathVariable Long id, @RequestParam String info) {
         imageService.setInfoForImage(id, info);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/admin/images/{id}/delete")
+    @PostMapping("/images/{id}/delete")
     public ResponseEntity deleteImage(@PathVariable Long id) {
         storageService.deleteOne(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/admin/news")
+    @GetMapping("/news")
     public String adminNews(Model model) {
         model.addAttribute("allArticles", newsService.getAll());
         return "adminNews";
@@ -69,7 +64,7 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/admin/news/{id}/delete")
+    @PostMapping("/news/{id}/delete")
     public ResponseEntity deleteNews(@PathVariable Long id) {
         newsService.deleteArticle(id);
         return ResponseEntity.ok().build();
