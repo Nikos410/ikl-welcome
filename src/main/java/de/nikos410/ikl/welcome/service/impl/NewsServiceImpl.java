@@ -48,6 +48,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public void addArticle(NewsArticle newArticle) {
+        newsArticleRepository.save(newArticle);
+    }
+
+    @Override
     public void editArticle(Long id, NewsArticle editedArticle) {
         final NewsArticle toEdit = newsArticleRepository.findOneById(id);
         if (toEdit == null) {

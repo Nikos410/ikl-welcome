@@ -9,6 +9,8 @@ public interface NewsService {
 
     List<NewsArticle> getAll();
 
+    void addArticle(NewsArticle newArticle);
+
     void editArticle(Long id, NewsArticle editedArticle);
 
     void deleteArticle(Long id);
