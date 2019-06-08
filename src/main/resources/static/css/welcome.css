@@ -58,6 +58,7 @@ html,body{
     bottom: 2%;
     left: 4%;
     display: none;
+    word-wrap: break-word;
 }
 
 .toast-body {
