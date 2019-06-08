@@ -54,6 +54,10 @@ public class NewsServiceImpl implements NewsService {
             throw new IllegalArgumentException("Article not found.");
         }
 
+        if (editedArticle.getHeadline() == null || editedArticle.getHeadline().isEmpty()) {
+            throw new IllegalArgumentException("Headline must not be empty.");
+        }
+
         toEdit.setHeadline(editedArticle.getHeadline());
         toEdit.setIntroduction(editedArticle.getIntroduction());
         toEdit.setContent(editedArticle.getContent());

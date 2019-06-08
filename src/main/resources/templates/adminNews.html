@@ -55,6 +55,7 @@
                                name="headline"
                                th:value="${article.headline}"
                                style="width: 100%; margin-bottom: 1rem;"
+                               required="required"
                                placeholder="Überschrift"/>
 
                         <input class="form-control"
@@ -76,7 +77,11 @@
 
                         <button type="button"
                                 class="btn btn-primary"
-                                onclick="editArticle(this.parentNode.getAttribute('data-article-id'))">
+                                onclick="editArticle(this.parentNode.getAttribute('data-article-id'))"
+                                data-container="body"
+                                data-toggle="popover-manual"
+                                data-placement="right"
+                                data-content="Gespeichert!">
                             Speichern <span class="fas fa-save"></span>
                         </button>
 
