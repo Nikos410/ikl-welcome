@@ -1,0 +1,17 @@
+.jumbotron{
+    padding: 1rem 2rem 2rem 2rem;
+}
+
+#newsHeadline {
+    font-weight: 400;
+}
+
+#newsIntro {
+    font-weight: 300;
+    font-size: 2rem;
+}
+
+#newsContent {
+    font-weight: 400;
+    font-size: 1.5rem;
+}

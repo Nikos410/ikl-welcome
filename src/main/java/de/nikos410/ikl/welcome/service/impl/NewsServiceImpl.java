@@ -44,6 +44,20 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<NewsArticle> getAll() {
-        return null;
+        return newsArticleRepository.findAll();
+    }
+
+    @Override
+    public void editArticle(Long id, NewsArticle editedArticle) {
+        final NewsArticle toEdit = newsArticleRepository.findOneById(id);
+        if (toEdit == null) {
+            throw new IllegalArgumentException("Article not found.");
+        }
+
+        toEdit.setHeadline(editedArticle.getHeadline());
+        toEdit.setIntroduction(editedArticle.getIntroduction());
+        toEdit.setContent(editedArticle.getContent());
+
+        newsArticleRepository.save(toEdit);
     }
 }

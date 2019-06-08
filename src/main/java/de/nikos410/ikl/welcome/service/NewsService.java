@@ -8,4 +8,6 @@ public interface NewsService {
     NewsArticle getNext(Long lastId);
 
     List<NewsArticle> getAll();
+
+    void editArticle(Long id, NewsArticle editedArticle);
 }

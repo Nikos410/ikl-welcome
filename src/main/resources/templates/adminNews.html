@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Akuelle Beiträge verwalten</title>
+
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font-Awesome -->
+    <link rel='stylesheet' href='/webjars/font-awesome/css/fontawesome.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.8.2/css/solid.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.8.2/css/regular.min.css'>
+
+    <!-- Showdown -->
+    <script src="/js/lib/showdown.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/js/adminNews.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/adminNews.css">
+</head>
+<body>
+
+<div style="width: 90%; margin-left: 5%; padding-top: 5%; float: left;">
+    <div class="jumbotron" style="text-align: center;">
+        <h1>Beiträge verwalten</h1>
+
+        <br/>
+
+        <div class="accordion" id="allArticles">
+            <div th:each="article : ${allArticles}"
+                 class="card">
+                <div class="card-header" id="heading1">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                th:data-target="'#collapse' + ${article.id}"
+                                th:text="${article.headline}">
+                        </button>
+                    </h2>
+                </div>
+
+                <div th:id="'collapse' + ${article.id}" class="collapse"
+                     data-parent="#allArticles">
+                    <div class="card-body input-group"
+                         th:data-article-id="${article.id}">
+                        <input class="form-control"
+                               name="headline"
+                               th:value="${article.headline}"
+                               style="width: 100%; margin-bottom: 1rem;"
+                               placeholder="Überschrift"/>
+
+                        <input class="form-control"
+                               name="intro"
+                               th:value="${article.introduction}"
+                               style="width: 100%; margin-bottom: 1rem;"
+                               placeholder="Einleitung"/>
+
+                        <div style="width: 100%; margin-bottom: 1rem;">
+                            <textarea class="form-control"
+                                      name="content"
+                                      th:text="${article.content}"
+                                      style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
+                                      placeholder="Text"></textarea>
+                            <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
+
+                            </div>
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="editArticle(this.parentNode.getAttribute('data-article-id'))">
+                            Speichern <span class="fas fa-save"></span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

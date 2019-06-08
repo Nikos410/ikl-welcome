@@ -1,7 +1,9 @@
 package de.nikos410.ikl.welcome.controller;
 
 import de.nikos410.ikl.welcome.exception.StorageException;
+import de.nikos410.ikl.welcome.model.NewsArticle;
 import de.nikos410.ikl.welcome.service.ImageService;
+import de.nikos410.ikl.welcome.service.NewsService;
 import de.nikos410.ikl.welcome.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,12 @@ public class AdminController {
 
     private final StorageService storageService;
     private final ImageService imageService;
+    private final NewsService newsService;
 
-    public AdminController(StorageService storageService, ImageService imageService) {
+    public AdminController(StorageService storageService, ImageService imageService, NewsService newsService) {
         this.storageService = storageService;
         this.imageService = imageService;
+        this.newsService = newsService;
     }
 
     @GetMapping("/admin")
@@ -57,6 +61,18 @@ public class AdminController {
     @PostMapping("/admin/images/{id}/delete")
     public ResponseEntity deleteImage(@PathVariable Long id) {
         storageService.deleteOne(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/admin/news")
+    public String adminNews(Model model) {
+        model.addAttribute("allArticles", newsService.getAll());
+        return "adminNews";
+    }
+
+    @PostMapping("/admin/news/{id}/edit")
+    public ResponseEntity editNews(@PathVariable Long id, NewsArticle editedArticle) {
+        newsService.editArticle(id, editedArticle);
         return ResponseEntity.ok().build();
     }
 }
