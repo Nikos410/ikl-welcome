@@ -64,4 +64,14 @@ public class NewsServiceImpl implements NewsService {
 
         newsArticleRepository.save(toEdit);
     }
+
+    @Override
+    public void deleteArticle(Long id) {
+        final NewsArticle toDelete = newsArticleRepository.findOneById(id);
+        if (toDelete == null) {
+            throw new IllegalArgumentException("Article not found.");
+        }
+
+        newsArticleRepository.delete(toDelete);
+    }
 }

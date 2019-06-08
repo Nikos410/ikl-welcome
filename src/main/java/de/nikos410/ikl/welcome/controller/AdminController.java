@@ -75,4 +75,10 @@ public class AdminController {
         newsService.editArticle(id, editedArticle);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/admin/news/{id}/delete")
+    public ResponseEntity deleteNews(@PathVariable Long id) {
+        newsService.deleteArticle(id);
+        return ResponseEntity.ok().build();
+    }
 }

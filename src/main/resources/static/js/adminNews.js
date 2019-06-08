@@ -6,8 +6,8 @@ function editArticle(id) {
     var card = $("#allArticles").find("[data-article-id='" + id + "']");
 
     var data = {
-        "headline": card.children("input[name='headline']").val(),
-        "introduction": card.children("input[name='intro']").val(),
+        "headline": card.find("input[name='headline']").val(),
+        "introduction": card.find("input[name='intro']").val(),
         "content": card.find("textarea[name='content']").val()
     };
 
@@ -16,7 +16,7 @@ function editArticle(id) {
         type: "POST",
         data: data,
         success: function () {
-            var button = card.find("button");
+            var button = card.find("button[name=save]");
             button.popover('show');
 
             setTimeout(function(){
@@ -24,7 +24,23 @@ function editArticle(id) {
             }, 2000);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert("Could not set info. Request received status code " + xhr.status + ". Error: " + thrownError);
+            alert("Could not save article. Request received status code " + xhr.status + ". Error: " + thrownError);
+        }
+    });
+}
+
+// Delete an article
+function deleteArticle(id) {
+    var card = $("#allArticles").find("[data-article-id='" + id + "']");
+
+    $.ajax({
+        url: "/admin/news/" + id + "/delete",
+        type: "POST",
+        success: function () {
+            card.remove();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("Could not remove article. Request received status code " + xhr.status + ". Error: " + thrownError);
         }
     });
 }

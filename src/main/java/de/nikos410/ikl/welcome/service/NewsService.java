@@ -10,4 +10,6 @@ public interface NewsService {
     List<NewsArticle> getAll();
 
     void editArticle(Long id, NewsArticle editedArticle);
+
+    void deleteArticle(Long id);
 }
