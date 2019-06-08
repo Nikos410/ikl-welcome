@@ -39,17 +39,10 @@ public class AdminController {
         return "adminImages";
     }
 
-    @PostMapping("/admin/images/upload")
-    public String handleImageUpload(@RequestParam("file") MultipartFile uploadedImage, RedirectAttributes redirectAttributes) {
-        try {
-            storageService.store(uploadedImage);
-            redirectAttributes.addFlashAttribute("uploadSuccess", true);
-        } catch (StorageException e) {
-            LOG.error("Could not store uploaded image.", e);
-            redirectAttributes.addFlashAttribute("uploadSuccess", false);
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-        }
-        return "redirect:/admin";
+    @PostMapping("/images/upload")
+    public ResponseEntity handleImageUpload(@RequestParam("file") MultipartFile uploadedImage) {
+        storageService.store(uploadedImage);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/admin/images/{id}/setinfo")
