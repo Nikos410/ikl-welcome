@@ -17,41 +17,35 @@ $(document).ready(function(){
 });
 
 function setInfo(id) {
-    var input = document.getElementById("image-info-" + id);
-    var info = input.value;
+    var input = $("#image-info-" + id);
 
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/admin/images/" + id + "/setinfo", true);
-    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    $.ajax({
+        url: "/admin/images/" + id + "/setinfo",
+        type: "POST",
+        data: {"info": input.val()},
+        success: function () {
+            input.popover('show');
 
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4) {
-            if (xmlHttp.status == 200) {
-                $('#image-info-' + id).popover('show');
-
-                setTimeout(function(){
-                    $('#image-info-' + id).popover('hide');
-                }, 2000);
-            } else {
-                alert("Could not set info. Status " + xmlHttp.status);
-            }
+            setTimeout(function(){
+                input.popover('hide');
+            }, 2000);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("Could not set info. Request received status code " + xhr.status + ". Error: " + thrownError);
         }
-    };
-    xmlHttp.send("info=" + info);
+    });
 }
 
 function deleteImage(id) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/admin/images/" + id + "/delete", true);
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.status == 200) {
+    $.ajax({
+        url: "/admin/images/" + id + "/delete",
+        type: "POST",
+        success: function () {
             // Remove the deleted element
-            var toRemove = document.getElementById("image-card-" + id);
-            toRemove.parentNode.removeChild(toRemove);
+            $("#image-card-" + id).remove();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("Could not delete image. Request received status code " + xhr.status + ". Error: " + thrownError);
         }
-        else {
-            alert("Could not delete image. Status " + xmlHttp.status);
-        }
-    };
-    xmlHttp.send(null);
+    });
 }
