@@ -5,22 +5,6 @@ var hiddenSlide;
 var displayedToast;
 var hiddenToast;
 
-$(document).ready(function () {
-    // Initialize toasts
-    $('.toast').toast();
-
-    // Initialize elements for slideshow
-    displayedSlide = $("#slideA");
-    hiddenSlide = $("#slideB");
-
-    displayedToast = $('#infoA');
-    hiddenToast = $('#infoB');
-
-    // Start slideshow
-    displayNextSlide();
-    setInterval(displayNextSlide, 4000);
-});
-
 function getNextImage() {
     $.ajax({
         url: '/nextimage',
@@ -67,3 +51,68 @@ function displayNextSlide() {
     // Update image for hidden slide
     getNextImage();
 }
+
+// News section
+var headlineElement;
+var introElement;
+var contentElement;
+
+var nextHeadline = "Wird geladen...";
+var nextIntro = "Hier könnte Ihre Werbung stehen!";
+var nextContent;
+
+var lastId = -1;
+
+var converter = new showdown.Converter();
+
+function displayNextNews() {
+    var parsedContent = converter.makeHtml(nextContent);
+    headlineElement.text(nextHeadline);
+    introElement.text(nextIntro);
+    contentElement.html(parsedContent);
+
+    loadNextNews();
+}
+
+function loadNextNews() {
+    $.ajax({
+        url: '/nextnews/' + lastId,
+        type: "GET",
+        data: null,
+        dataType: 'json',
+        success: function (data) {
+            nextHeadline = data.headline;
+            nextIntro = data.introduction;
+            nextContent = data.content;
+            lastId = data.id;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log("Request received status code " + xhr.status + ". Error: " + thrownError);
+        }
+    });
+}
+
+// Initialize welcome screen
+$(document).ready(function () {
+    // Initialize toasts
+    $('.toast').toast();
+
+    // Initialize elements for slideshow
+    displayedSlide = $("#slideA");
+    hiddenSlide = $("#slideB");
+
+    displayedToast = $('#infoA');
+    hiddenToast = $('#infoB');
+
+    // Initialize elements for news section
+    headlineElement = $("#newsHeadline");
+    introElement = $("#newsIntro");
+    contentElement = $("#newsContent");
+
+    // Start slideshow and news section
+    displayNextSlide();
+    displayNextNews();
+
+    setInterval(displayNextSlide, 4000);
+    setInterval(displayNextNews, 4000);
+});
