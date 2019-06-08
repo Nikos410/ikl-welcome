@@ -5,7 +5,7 @@ import de.nikos410.ikl.welcome.model.NewsArticle;
 import java.util.List;
 
 public interface NewsService {
-    NewsArticle getNext(Long lastId);
+    NewsArticle nextArticle(Long lastId);
 
     List<NewsArticle> getAll();
 

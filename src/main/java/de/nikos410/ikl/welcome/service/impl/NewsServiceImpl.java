@@ -23,7 +23,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsArticle getNext(Long lastId) {
+    public NewsArticle nextArticle(Long lastId) {
         final List<NewsArticle> allArticles = newsArticleRepository.findAll();
 
         // Return fallback article if no articles can be found

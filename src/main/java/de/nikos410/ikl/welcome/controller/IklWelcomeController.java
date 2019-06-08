@@ -39,6 +39,6 @@ public class IklWelcomeController {
     @GetMapping("/nextnews/{lastId}")
     @ResponseBody
     public NewsArticle nextNews(@PathVariable Long lastId) {
-        return newsService.getNext(lastId);
+        return newsService.nextArticle(lastId);
     }
 }
