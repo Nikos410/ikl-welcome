@@ -58,7 +58,7 @@ public class AdminController {
         return "adminNews";
     }
 
-    @PostMapping("/admin/news/{id}/edit")
+    @PostMapping("/news/{id}/edit")
     public ResponseEntity editNews(@PathVariable Long id, NewsArticle editedArticle) {
         newsService.editArticle(id, editedArticle);
         return ResponseEntity.ok().build();
