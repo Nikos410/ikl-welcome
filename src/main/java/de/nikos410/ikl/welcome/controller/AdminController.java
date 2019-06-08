@@ -55,13 +55,14 @@ public class AdminController {
     @GetMapping("/news")
     public String adminNews(Model model) {
         model.addAttribute("allArticles", newsService.getAll());
+        model.addAttribute("newArticle", new NewsArticle());
         return "adminNews";
     }
 
-    @PostMapping
-    public ResponseEntity newArticle(NewsArticle newArticle) {
+    @PostMapping("/news/new")
+    public String newArticle(NewsArticle newArticle) {
         newsService.addArticle(newArticle);
-        return ResponseEntity.ok().build();
+        return "redirect:/admin/news";
     }
 
     @PostMapping("/news/{id}/edit")
