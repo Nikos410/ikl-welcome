@@ -11,8 +11,6 @@ function editArticle(id) {
         "content": card.find("textarea[name='content']").val()
     };
 
-    console.log(data);
-
     $.ajax({
         url: "/admin/news/" + id + "/edit",
         type: "POST",
