@@ -11,8 +11,10 @@ public class NewsArticle {
     @GeneratedValue
     private long id;
 
+    @Column(nullable = false)
     private String headline;
     private String introduction;
+    @Column(length = 2048)
     private String content;
 
     public long getId() {
@@ -40,6 +42,7 @@ public class NewsArticle {
         this.introduction = introduction;
     }
 
+    @Column(length = 2048)
     public String getContent() {
         return content;
     }
