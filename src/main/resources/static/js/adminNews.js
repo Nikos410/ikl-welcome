@@ -19,6 +19,9 @@ function editArticle(id) {
             var button = card.find("button[name=save]");
             button.popover('show');
 
+            // Update collapse button text
+            card.children(".card-header").find("button").text(data.headline);
+
             setTimeout(function(){
                 button.popover('hide');
             }, 2000);
