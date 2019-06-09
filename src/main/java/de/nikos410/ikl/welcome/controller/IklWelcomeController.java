@@ -30,10 +30,10 @@ public class IklWelcomeController {
         return "welcome";
     }
 
-    @GetMapping("/nextimage")
+    @GetMapping("/nextimage/{lastId}")
     @ResponseBody
-    public Image nextImage() {
-        return imageService.getNextImage();
+    public Image nextImage(@PathVariable Long lastId) {
+        return imageService.getNextImage(lastId);
     }
 
     @GetMapping("/nextnews/{lastId}")

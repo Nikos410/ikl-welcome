@@ -5,15 +5,18 @@ var hiddenSlide;
 var displayedToast;
 var hiddenToast;
 
+var lastImageId = -1;
+
 function getNextImage() {
     $.ajax({
-        url: '/nextimage',
+        url: '/nextimage/' + lastImageId,
         type: "GET",
         data: null,
         dataType: 'json',
         success: function (data) {
             hiddenSlide.attr("src", "/images/" + data.file);
             hiddenToast.find(".toast-body").text(data.info);
+            lastImageId = data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log("Request received status code " + xhr.status + ". Error: " + thrownError);
@@ -61,7 +64,7 @@ var nextHeadline = "Wird geladen...";
 var nextIntro = "Hier könnte Ihre Werbung stehen!";
 var nextContent;
 
-var lastId = -1;
+var lastNewsId = -1;
 
 var converter = new showdown.Converter();
 
@@ -76,7 +79,7 @@ function displayNextNews() {
 
 function loadNextNews() {
     $.ajax({
-        url: '/nextnews/' + lastId,
+        url: '/nextnews/' + lastNewsId,
         type: "GET",
         data: null,
         dataType: 'json',
@@ -84,7 +87,7 @@ function loadNextNews() {
             nextHeadline = data.headline;
             nextIntro = data.introduction;
             nextContent = data.content;
-            lastId = data.id;
+            lastNewsId = data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log("Request received status code " + xhr.status + ". Error: " + thrownError);

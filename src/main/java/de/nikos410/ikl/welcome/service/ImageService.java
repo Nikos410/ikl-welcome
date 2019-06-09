@@ -5,7 +5,7 @@ import de.nikos410.ikl.welcome.model.Image;
 import java.util.List;
 
 public interface ImageService {
-    Image getNextImage();
+    Image getNextImage(Long lastId);
 
     String getInfoForImage(String fileName);
 

@@ -26,8 +26,23 @@ public class ImageServiceImpl implements ImageService {
      * @return The file encoded as base64
      */
     @Override
-    public Image getNextImage() {
-        return getRandomImage();
+    public Image getNextImage(Long lastId) {
+        final List<Image> allImages = imageRepository.findAll();
+
+        // Return fallback image if no images can be found
+        if (allImages.isEmpty()) {
+            return null;
+        }
+
+        // Return the image with the next highest ID
+        for (Image image : allImages) {
+            if (image.getId() > lastId) {
+                return image;
+            }
+        }
+
+        // If no image with a higher ID can be found, return the first image
+        return allImages.get(0);
     }
 
     @Override
@@ -46,23 +61,5 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public List<Image> findAll() {
         return imageRepository.findAll();
-    }
-
-    private Image getRandomImage() {
-        final List<Image> allImages = imageRepository.findAll();
-        Image nextImage = null;
-
-        if (allImages.isEmpty()) {
-            return null;
-        } else if (allImages.size() == 1) {
-            nextImage = allImages.get(0);
-        } else {
-            while (nextImage == null || currentImage  == nextImage.getId()) {
-                nextImage = allImages.get(RANDOM.nextInt(allImages.size()));
-            }
-        }
-
-        currentImage = nextImage.getId();
-        return nextImage;
     }
 }
