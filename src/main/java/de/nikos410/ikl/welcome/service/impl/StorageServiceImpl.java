@@ -75,7 +75,12 @@ public class StorageServiceImpl implements StorageService {
                         "Cannot store file with relative path outside current directory: "
                                 + filename);
             }
-            final Path newPath = IMAGES_ROOT.resolve(filename);
+            Path newPath = IMAGES_ROOT.resolve(filename);
+
+            while (Files.exists(newPath)) {
+                // Rename file if it already exists
+                newPath = IMAGES_ROOT.resolve("a" + newPath.getFileName().toString());
+            }
 
             Files.copy(file.getInputStream(), newPath,
                     StandardCopyOption.REPLACE_EXISTING);
