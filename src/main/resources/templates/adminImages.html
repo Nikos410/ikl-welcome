@@ -27,7 +27,7 @@
     <script src="/js/adminImages.js"></script>
 </head>
 <body>
-<div style="width: 90%; margin-left: 5%; padding-top: 5%; float: left;">
+<div id="container">
     <div class="jumbotron" style="text-align: center;">
         <h1>Neue Bilder hinzufügen</h1>
 
@@ -50,7 +50,6 @@
 
         <div th:each="image : ${allImages}"
              class="card"
-             style="margin-top: 1%;"
              th:id="'image-card-' + ${image.id}">
             <div class="card-body">
                 <div class="row">

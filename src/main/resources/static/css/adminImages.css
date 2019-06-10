@@ -24,12 +24,13 @@
     object-fit: cover;
 }
 
-.navbar .navbar-nav {
-    display: inline-block;
-    float: none;
-    /*vertical-align: top;*/
+#container {
+    width: 90%;
+    margin-left: 5%;
+    padding-top: 5%;
+    float: left;
 }
 
-.navbar .navbar-collapse {
-    text-align: center;
+.card {
+    margin-top: 1%;
 }
