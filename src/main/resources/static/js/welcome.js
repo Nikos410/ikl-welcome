@@ -116,6 +116,6 @@ $(document).ready(function () {
     displayNextSlide();
     displayNextNews();
 
-    setInterval(displayNextSlide, 4000);
-    setInterval(displayNextNews, 4000);
+    setInterval(displayNextSlide, 6000);
+    setInterval(displayNextNews, 16000);
 });
