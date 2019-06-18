@@ -24,8 +24,8 @@
 <div id="container">
     <div id="slideshow">
 
-        <img id="slideA" class="slide animate-left" th:src="@{/assets/fallback.jpg}"/>
-        <img id="slideB" class="slide animate-left" th:src="@{/assets/fallback.jpg}" style="display: none;"/>
+        <img id="slideA" th:class="'slide' + ${#arrays.contains(@environment.getActiveProfiles(),'animate') ? ' animate-left' : ''}" th:src="@{/assets/fallback.jpg}"/>
+        <img id="slideB" th:class="'slide' + ${#arrays.contains(@environment.getActiveProfiles(),'animate') ? ' animate-left' : ''}" th:src="@{/assets/fallback.jpg}" style="display: none;"/>
     </div>
 
     <div id="infoA"
