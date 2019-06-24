@@ -104,11 +104,25 @@
 
         <nav>
             <ul class="pagination justify-content-center">
+                <li th:class="${currentPage == 0 ? 'page-item disabled' : 'page.item'}"
+                    title="Vorherige Seite">
+                    <a th:href="@{/admin/images(page=${currentPage - 1})}"
+                       class="page-link">
+                        <span class="fas fa-chevron-left"></span>
+                    </a>
+                </li>
                 <li th:each="i: ${#numbers.sequence(0, pageCount - 1)}"
                     th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
                     <a th:href="@{/admin/images(page=${i})}"
                        class="page-link"
                        th:text="${i + 1}"/>
+                </li>
+                <li th:class="${currentPage == (pageCount - 1) ? 'page-item disabled' : 'page.item'}"
+                    title="Nächste Seite">
+                    <a th:href="@{/admin/images(page=${currentPage + 1})}"
+                       class="page-link">
+                        <span class="fas fa-chevron-right"></span>
+                    </a>
                 </li>
             </ul>
         </nav>
