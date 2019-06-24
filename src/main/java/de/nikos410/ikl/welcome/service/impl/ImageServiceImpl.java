@@ -3,18 +3,17 @@ package de.nikos410.ikl.welcome.service.impl;
 import de.nikos410.ikl.welcome.database.ImageRepository;
 import de.nikos410.ikl.welcome.model.Image;
 import de.nikos410.ikl.welcome.service.ImageService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class ImageServiceImpl implements ImageService {
-    private static final Random RANDOM = new Random();
+    private static final int PAGE_SIZE = 20;
 
     private ImageRepository imageRepository;
-
-    private long currentImage = -1;
 
     public ImageServiceImpl(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -59,7 +58,18 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> findAll() {
+    public List<Image> getAll() {
         return imageRepository.findAll();
+    }
+
+    @Override
+    public List<Image> getPage(int page) {
+        final Pageable pageRequest = PageRequest.of(page, PAGE_SIZE);
+        return imageRepository.findAll(pageRequest).getContent();
+    }
+
+    @Override
+    public int getPageCount() {
+        return (int) Math.ceil((double) imageRepository.count() / PAGE_SIZE);
     }
 }

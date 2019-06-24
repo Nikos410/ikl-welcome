@@ -11,5 +11,9 @@ public interface ImageService {
 
     void setInfoForImage(Long id, String info);
 
-    List<Image> findAll();
+    List<Image> getAll();
+
+    List<Image> getPage(int page);
+
+    int getPageCount();
 }

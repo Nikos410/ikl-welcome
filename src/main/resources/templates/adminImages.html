@@ -48,7 +48,7 @@
 
         <br/>
 
-        <div th:each="image : ${allImages}"
+        <div th:each="image : ${images}"
              class="card"
              th:id="'image-card-' + ${image.id}">
             <div class="card-body">
@@ -99,6 +99,19 @@
                 </div>
             </div>
         </div>
+
+        <hr/>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li th:each="i: ${#numbers.sequence(0, pageCount - 1)}"
+                    th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
+                    <a th:href="@{/admin/images(page=${i})}"
+                       class="page-link"
+                       th:text="${i + 1}"/>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 </body>

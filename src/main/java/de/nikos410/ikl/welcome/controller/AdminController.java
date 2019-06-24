@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,8 +30,15 @@ public class AdminController {
     }
 
     @GetMapping("/images")
-    public String adminImages(Model model) {
-        model.addAttribute("allImages", imageService.findAll());
+    public String adminImages(Model model, RedirectAttributes redirectAttributes, @RequestParam(required = false) Integer page) {
+        if (page == null) {
+            redirectAttributes.addAttribute("page", 0);
+            return "redirect:/admin/images";
+        }
+
+        model.addAttribute("images", imageService.getPage(page));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageCount", imageService.getPageCount());
         return "adminImages";
     }
 
