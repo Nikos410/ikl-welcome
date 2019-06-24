@@ -31,7 +31,7 @@ public class AdminController {
 
     @GetMapping("/images")
     public String adminImages(Model model, RedirectAttributes redirectAttributes, @RequestParam(required = false) Integer page) {
-        if (page == null) {
+        if (page == null || page < 0) {
             redirectAttributes.addAttribute("page", 0);
             return "redirect:/admin/images";
         }

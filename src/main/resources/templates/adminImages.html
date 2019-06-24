@@ -116,7 +116,7 @@
 
         <nav>
             <ul class="pagination justify-content-center">
-                <li th:class="${currentPage == 0 ? 'page-item disabled' : 'page.item'}"
+                <li th:class="${currentPage <= 0 ? 'page-item disabled' : 'page.item'}"
                     title="Vorherige Seite">
                     <a th:href="@{/admin/images(page=${currentPage - 1})}"
                        class="page-link">
@@ -129,7 +129,7 @@
                        class="page-link"
                        th:text="${i + 1}"/>
                 </li>
-                <li th:class="${currentPage == (pageCount - 1) ? 'page-item disabled' : 'page.item'}"
+                <li th:class="${currentPage >= (pageCount - 1) ? 'page-item disabled' : 'page.item'}"
                     title="Nächste Seite">
                     <a th:href="@{/admin/images(page=${currentPage + 1})}"
                        class="page-link">
