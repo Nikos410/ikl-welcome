@@ -23,7 +23,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsArticle nextArticle(Long lastId) {
+    public NewsArticle nextArticle(Long previousId) {
         final List<NewsArticle> allArticles = newsArticleRepository.findAll();
 
         // Return fallback article if no articles can be found
@@ -33,7 +33,7 @@ public class NewsServiceImpl implements NewsService {
 
         // Return the article with the next highest ID
         for (NewsArticle article : allArticles) {
-            if (article.getId() > lastId) {
+            if (article.getId() > previousId) {
                 return article;
             }
         }

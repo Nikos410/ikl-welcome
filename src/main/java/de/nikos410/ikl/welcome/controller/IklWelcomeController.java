@@ -30,15 +30,15 @@ public class IklWelcomeController {
         return "welcome";
     }
 
-    @GetMapping("/nextimage/{lastId}")
+    @GetMapping("/nextimage/{previousId}")
     @ResponseBody
-    public Image nextImage(@PathVariable Long lastId) {
-        return imageService.getNextImage(lastId);
+    public Image nextImage(@PathVariable Long previousId) {
+        return imageService.getNextImage(previousId);
     }
 
-    @GetMapping("/nextnews/{lastId}")
+    @GetMapping("/nextnews/{previousId}")
     @ResponseBody
-    public NewsArticle nextNews(@PathVariable Long lastId) {
-        return newsService.nextArticle(lastId);
+    public NewsArticle nextNews(@PathVariable Long previousId) {
+        return newsService.nextArticle(previousId);
     }
 }

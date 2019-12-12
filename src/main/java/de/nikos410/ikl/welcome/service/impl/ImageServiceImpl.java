@@ -25,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
      * @return The file encoded as base64
      */
     @Override
-    public Image getNextImage(Long lastId) {
+    public Image getNextImage(Long previousId) {
         final List<Image> allImages = imageRepository.findAll();
 
         // Return fallback image if no images can be found
@@ -35,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
 
         // Return the image with the next highest ID
         for (Image image : allImages) {
-            if (image.getId() > lastId) {
+            if (image.getId() > previousId) {
                 return image;
             }
         }
