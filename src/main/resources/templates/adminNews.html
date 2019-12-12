@@ -45,121 +45,121 @@
 </nav>
 
 <div id="news" class="padder">
-        <div class="accordion" id="allArticles">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="mb-0">
-                        <button class="btn btn-primary collapsed"
-                                type="button"
-                                data-toggle="collapse"
-                                data-target="#newArticle">
-                            <span class="fas fa-plus"></span>
-                            Neuen Beitrag hinzufügen
-                        </button>
-                    </h2>
-                </div>
-
-                <div id="newArticle" class="card-body input-group collapse"
-                     data-parent="#allArticles">
-                    <form th:action="@{/admin/news/new}"
-                          th:object="${newArticle}"
-                          method="POST"
-                          style="width: 100%;">
-                        <input class="form-control"
-                               th:field="*{headline}"
-                               style="width: 100%; margin-bottom: 1rem;"
-                               required="required"
-                               placeholder="Überschrift"/>
-
-                        <input class="form-control"
-                               th:field="*{introduction}"
-                               style="width: 100%; margin-bottom: 1rem;"
-                               placeholder="Einleitung"/>
-
-                        <div style="width: 100%; margin-bottom: 1rem;">
-                                <textarea class="form-control"
-                                          th:field="*{content}"
-                                          style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
-                                          placeholder="Text"></textarea>
-                            <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
-
-                            </div>
-                        </div>
-
-                        <div style="width: 100%; float: left; margin-top: 1rem; text-align: left;">
-                            <button type="submit"
-                                    class="btn btn-primary">
-                                Speichern <span class="fas fa-save"></span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <div class="accordion" id="allArticles">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button class="btn btn-primary collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#newArticle">
+                        <span class="fas fa-plus"></span>
+                        Neuen Beitrag hinzufügen
+                    </button>
+                </h2>
             </div>
-            <div th:each="article : ${allArticles}"
-                 class="card"
-                 th:data-article-id="${article.id}">
-                <div class="card-header">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link collapsed"
-                                type="button"
-                                data-toggle="collapse"
-                                th:data-target="'#collapse' + ${article.id}"
-                                th:text="${article.headline}">
-                        </button>
-                    </h2>
-                </div>
 
-                <div th:id="'collapse' + ${article.id}" class="collapse"
-                     data-parent="#allArticles">
-                    <div class="card-body input-group">
-                        <input class="form-control"
-                               name="headline"
-                               th:value="${article.headline}"
-                               style="width: 100%; margin-bottom: 1rem;"
-                               required="required"
-                               placeholder="Überschrift"/>
+            <div id="newArticle" class="card-body input-group collapse"
+                 data-parent="#allArticles">
+                <form th:action="@{/admin/news/new}"
+                      th:object="${newArticle}"
+                      method="POST"
+                      style="width: 100%;">
+                    <input class="form-control"
+                           th:field="*{headline}"
+                           style="width: 100%; margin-bottom: 1rem;"
+                           required="required"
+                           placeholder="Überschrift"/>
 
-                        <input class="form-control"
-                               name="intro"
-                               th:value="${article.introduction}"
-                               style="width: 100%; margin-bottom: 1rem;"
-                               placeholder="Einleitung"/>
+                    <input class="form-control"
+                           th:field="*{introduction}"
+                           style="width: 100%; margin-bottom: 1rem;"
+                           placeholder="Einleitung"/>
 
-                        <div style="width: 100%; margin-bottom: 1rem;">
+                    <div style="width: 100%; margin-bottom: 1rem;">
                             <textarea class="form-control"
-                                      name="content"
-                                      th:text="${article.content}"
+                                      th:field="*{content}"
                                       style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
                                       placeholder="Text"></textarea>
-                            <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
+                        <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
 
-                            </div>
                         </div>
+                    </div>
 
-                        <div th:data-article-id="${article.id}">
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    name="save"
-                                    onclick="editArticle(this.parentNode.getAttribute('data-article-id'))"
-                                    data-container="body"
-                                    data-toggle="popover-manual"
-                                    data-placement="right"
-                                    data-content="Gespeichert!">
-                                Speichern <span class="fas fa-save"></span>
-                            </button>
+                    <div style="width: 100%; float: left; margin-top: 1rem; text-align: left;">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Speichern <span class="fas fa-save"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div th:each="article : ${allArticles}"
+             class="card"
+             th:data-article-id="${article.id}">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            th:data-target="'#collapse' + ${article.id}"
+                            th:text="${article.headline}">
+                    </button>
+                </h2>
+            </div>
 
-                            <button type="button"
-                                    class="btn btn-danger"
-                                    name="delete"
-                                    style="margin-left: 1rem;"
-                                    onclick="deleteArticle(this.parentNode.getAttribute('data-article-id'))">
-                                Löschen <span class="far fa-trash-alt"></span>
-                            </button>
+            <div th:id="'collapse' + ${article.id}" class="collapse"
+                 data-parent="#allArticles">
+                <div class="card-body input-group">
+                    <input class="form-control"
+                           name="headline"
+                           th:value="${article.headline}"
+                           style="width: 100%; margin-bottom: 1rem;"
+                           required="required"
+                           placeholder="Überschrift"/>
+
+                    <input class="form-control"
+                           name="intro"
+                           th:value="${article.introduction}"
+                           style="width: 100%; margin-bottom: 1rem;"
+                           placeholder="Einleitung"/>
+
+                    <div style="width: 100%; margin-bottom: 1rem;">
+                        <textarea class="form-control"
+                                  name="content"
+                                  th:text="${article.content}"
+                                  style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
+                                  placeholder="Text"></textarea>
+                        <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
+
                         </div>
+                    </div>
+
+                    <div th:data-article-id="${article.id}">
+                        <button type="button"
+                                class="btn btn-primary"
+                                name="save"
+                                onclick="editArticle(this.parentNode.getAttribute('data-article-id'))"
+                                data-container="body"
+                                data-toggle="popover-manual"
+                                data-placement="right"
+                                data-content="Gespeichert!">
+                            Speichern <span class="fas fa-save"></span>
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-danger"
+                                name="delete"
+                                style="margin-left: 1rem;"
+                                onclick="deleteArticle(this.parentNode.getAttribute('data-article-id'))">
+                            Löschen <span class="far fa-trash-alt"></span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 </body>
 </html>
