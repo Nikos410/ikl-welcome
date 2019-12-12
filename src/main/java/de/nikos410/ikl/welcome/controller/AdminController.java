@@ -31,7 +31,7 @@ public class AdminController {
 
     @GetMapping("/settings")
     public String adminSettings() {
-        return "adminSettings"
+        return "adminSettings";
     }
 
     @GetMapping("/images")
