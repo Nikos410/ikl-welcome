@@ -44,56 +44,57 @@
     </div>
 </nav>
 
-<div style="width: 90%; margin-left: 5%; padding-top: 5%; float: left;">
-    <div class="jumbotron" style="text-align: center;">
-        <h1>Neuen Beitrag hinzufügen</h1>
-
-        <br/>
-
-        <div class="card" style="width: 100%;">
-            <div class="card-body input-group">
-                <form th:action="@{/admin/news/new}"
-                      th:object="${newArticle}"
-                      method="POST"
-                      style="width: 100%;">
-                    <input class="form-control"
-                           th:field="*{headline}"
-                           style="width: 100%; margin-bottom: 1rem;"
-                           required="required"
-                           placeholder="Überschrift"/>
-
-                    <input class="form-control"
-                           th:field="*{introduction}"
-                           style="width: 100%; margin-bottom: 1rem;"
-                           placeholder="Einleitung"/>
-
-                    <div style="width: 100%; margin-bottom: 1rem;">
-                            <textarea class="form-control"
-                                      th:field="*{content}"
-                                      style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
-                                      placeholder="Text"></textarea>
-                        <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
-
-                        </div>
-                    </div>
-
-                    <div style="width: 100%; float: left; margin-top: 1rem; text-align: left;">
-                        <button type="submit"
-                                class="btn btn-primary">
-                            Speichern <span class="fas fa-save"></span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="jumbotron" style="text-align: center;">
-        <h1>Beiträge verwalten</h1>
-
-        <br/>
-
+<div id="news" class="padder">
         <div class="accordion" id="allArticles">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button class="btn btn-primary collapsed"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#newArticle">
+                            <span class="fas fa-plus"></span>
+                            Neuen Beitrag hinzufügen
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="newArticle" class="card-body input-group collapse"
+                     data-parent="#allArticles">
+                    <form th:action="@{/admin/news/new}"
+                          th:object="${newArticle}"
+                          method="POST"
+                          style="width: 100%;">
+                        <input class="form-control"
+                               th:field="*{headline}"
+                               style="width: 100%; margin-bottom: 1rem;"
+                               required="required"
+                               placeholder="Überschrift"/>
+
+                        <input class="form-control"
+                               th:field="*{introduction}"
+                               style="width: 100%; margin-bottom: 1rem;"
+                               placeholder="Einleitung"/>
+
+                        <div style="width: 100%; margin-bottom: 1rem;">
+                                <textarea class="form-control"
+                                          th:field="*{content}"
+                                          style="width: 49%; min-height: 12rem; resize: vertical; float: left;"
+                                          placeholder="Text"></textarea>
+                            <div class="jumbotron" style="float: right; width: 49%; height: 100%; text-align: left;">
+
+                            </div>
+                        </div>
+
+                        <div style="width: 100%; float: left; margin-top: 1rem; text-align: left;">
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Speichern <span class="fas fa-save"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div th:each="article : ${allArticles}"
                  class="card"
                  th:data-article-id="${article.id}">
@@ -159,7 +160,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </body>
 </html>
