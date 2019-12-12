@@ -27,118 +27,125 @@
     <script src="/js/adminImages.js"></script>
 </head>
 <body>
-<div id="container">
-    <div class="jumbotron">
-        <span style="text-align: center">
-            <h1>Bilder verwalten</h1>
-        </span>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/welcome">Zur Anzeige</a>
 
-        <br/>
-
-        <div id="addImages">
-            <div class="card">
-                <div class="card-header" id="addImagesHeader">
-                    <h5 class="mb-0" style="text-align: center;">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#addImagesBody">
-                            Bilder hinzufügen
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="addImagesBody" class="collapse" data-parent="#addImages">
-                    <div class="card-body">
-                        <form th:action="@{/admin/images/upload}" class="dropzone dz-clickable" id="image-dropzone">
-                            <div class="dz-message d-flex flex-column">
-                                <i class="fas fa-images"></i>
-                                Bild(er) hierhin ziehen oder klicken
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr/>
-
-        <div th:each="image : ${images}"
-             class="card"
-             th:id="'image-card-' + ${image.id}">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-2">
-                        <a th:href="@{'/images/' + ${image.file}}">
-                            <img class="image"
-                                 th:src="@{'/images/' + ${image.file}}"/>
-                        </a>
-                    </div>
-                    <div class="col-9">
-                        <div class="input-group mb-3">
-                            <input type="text"
-                                   class="form-control"
-                                   th:value="${image.info}"
-                                   th:id="'image-info-' + ${image.id}"
-                                   placeholder="Info hinzufügen"
-                                   data-container="body"
-                                   data-toggle="popover-manual"
-                                   data-placement="bottom"
-                                   data-content="Info gespeichert."/>
-
-                            <div class="input-group-append">
-                                <button type="button"
-                                        class="btn btn-outline-secondary"
-                                        th:data-image-id="${image.id}"
-                                        onclick="setInfo(this.getAttribute('data-image-id'))"
-                                        data-container="body"
-                                        data-toggle="popover"
-                                        data-placement="bottom"
-                                        data-content="Speichern">
-                                    <span class="fas fa-check"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-toggle="popover"
-                                data-placement="bottom"
-                                data-content="Bild löschen"
-                                th:data-image-id="${image.id}"
-                                onclick="deleteImage(this.getAttribute('data-image-id'))">
-                            <span class="far fa-trash-alt"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr/>
-
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li th:class="${currentPage <= 0 ? 'page-item disabled' : 'page.item'}"
-                    title="Vorherige Seite">
-                    <a th:href="@{/admin/images(page=${currentPage - 1})}"
-                       class="page-link">
-                        <span class="fas fa-chevron-left"></span>
-                    </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/settings">Einstellungen</a>
                 </li>
-                <li th:each="i: ${#numbers.sequence(0, pageCount - 1)}"
-                    th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
-                    <a th:href="@{/admin/images(page=${i})}"
-                       class="page-link"
-                       th:text="${i + 1}"/>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/admin/images">Bilder</a>
                 </li>
-                <li th:class="${currentPage >= (pageCount - 1) ? 'page-item disabled' : 'page.item'}"
-                    title="Nächste Seite">
-                    <a th:href="@{/admin/images(page=${currentPage + 1})}"
-                       class="page-link">
-                        <span class="fas fa-chevron-right"></span>
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/news">Beiträge</a>
                 </li>
             </ul>
-        </nav>
+        </div>
+    </nav>
+
+    <div id="allImages" class="padder">
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="collapse" href="#addImagesBody">
+                            <span class="fas fa-plus"></span>
+                            Bilder hinzufügen
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="addImagesBody" class="collapse" data-parent="#allImages">
+                <div class="card-body">
+                    <form th:action="@{/admin/images/upload}" class="dropzone dz-clickable" id="image-dropzone">
+                        <div class="dz-message d-flex flex-column">
+                            <i class="fas fa-images"></i>
+                            Bild(er) hierhin ziehen oder klicken
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="list-group list-group-flush">
+                <div th:each="image : ${images}"
+                     class="list-group-item"
+                     th:id="'image-card-' + ${image.id}">
+                    <div class="row">
+                        <div class="col-2">
+                            <a th:href="@{'/images/' + ${image.file}}">
+                                <img class="image"
+                                     th:src="@{'/images/' + ${image.file}}"/>
+                            </a>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       th:value="${image.info}"
+                                       th:id="'image-info-' + ${image.id}"
+                                       placeholder="Info hinzufügen"
+                                       data-container="body"
+                                       data-toggle="popover-manual"
+                                       data-placement="bottom"
+                                       data-content="Info gespeichert."/>
+
+                                <div class="input-group-append">
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            th:data-image-id="${image.id}"
+                                            onclick="setInfo(this.getAttribute('data-image-id'))"
+                                            data-container="body"
+                                            data-toggle="popover"
+                                            data-placement="bottom"
+                                            data-content="Speichern">
+                                        <span class="fas fa-check"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    data-toggle="popover"
+                                    data-placement="bottom"
+                                    data-content="Bild löschen"
+                                    th:data-image-id="${image.id}"
+                                    onclick="deleteImage(this.getAttribute('data-image-id'))">
+                                <span class="far fa-trash-alt"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="card-footer">
+                <ul class="pagination justify-content-center">
+                    <li th:class="${currentPage <= 0 ? 'page-item disabled' : 'page.item'}"
+                        title="Vorherige Seite">
+                        <a th:href="@{/admin/images(page=${currentPage - 1})}"
+                           class="page-link">
+                            <span class="fas fa-chevron-left"></span>
+                        </a>
+                    </li>
+                    <li th:each="i: ${#numbers.sequence(0, pageCount - 1)}"
+                        th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
+                        <a th:href="@{/admin/images(page=${i})}"
+                           class="page-link"
+                           th:text="${i + 1}"/>
+                    </li>
+                    <li th:class="${currentPage >= (pageCount - 1) ? 'page-item disabled' : 'page.item'}"
+                        title="Nächste Seite">
+                        <a th:href="@{/admin/images(page=${currentPage + 1})}"
+                           class="page-link">
+                            <span class="fas fa-chevron-right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
 </body>
 </html>
