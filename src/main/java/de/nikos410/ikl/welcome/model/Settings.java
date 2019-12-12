@@ -1,5 +1,7 @@
 package de.nikos410.ikl.welcome.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,8 @@ public class Settings {
     @GeneratedValue
     private long id;
 
-    private BigDecimal imageDisplayDuration;
-    private BigDecimal newsDisplayDuration;
+    private int imageDisplayDuration = 8;
+    private int newsDisplayDuration = 24;
 
     public long getId() {
         return id;
@@ -24,20 +26,20 @@ public class Settings {
     }
 
     @Column(nullable = false)
-    public BigDecimal getImageDisplayDuration() {
+    public int getImageDisplayDuration() {
         return imageDisplayDuration;
     }
 
-    public void setImageDisplayDuration(BigDecimal imageDisplayDuration) {
+    public void setImageDisplayDuration(int imageDisplayDuration) {
         this.imageDisplayDuration = imageDisplayDuration;
     }
 
     @Column(nullable = false)
-    public BigDecimal getNewsDisplayDuration() {
+    public int getNewsDisplayDuration() {
         return newsDisplayDuration;
     }
 
-    public void setNewsDisplayDuration(BigDecimal showNewsDuration) {
+    public void setNewsDisplayDuration(int showNewsDuration) {
         this.newsDisplayDuration = showNewsDuration;
     }
 }

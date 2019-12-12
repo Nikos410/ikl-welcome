@@ -1,8 +1,10 @@
 package de.nikos410.ikl.welcome.controller;
 
+import de.nikos410.ikl.welcome.model.Settings;
 import de.nikos410.ikl.welcome.model.NewsArticle;
 import de.nikos410.ikl.welcome.service.ImageService;
 import de.nikos410.ikl.welcome.service.NewsService;
+import de.nikos410.ikl.welcome.service.SettingsService;
 import de.nikos410.ikl.welcome.service.StorageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,21 +19,32 @@ public class AdminController {
     private final StorageService storageService;
     private final ImageService imageService;
     private final NewsService newsService;
+    private final SettingsService settingsService;
 
-    public AdminController(StorageService storageService, ImageService imageService, NewsService newsService) {
+    public AdminController(StorageService storageService, ImageService imageService, NewsService newsService, SettingsService settingsService) {
         this.storageService = storageService;
         this.imageService = imageService;
         this.newsService = newsService;
+        this.settingsService = settingsService;
     }
 
     @GetMapping("")
     public String admin() {
-        return "redirect:/admin/settins";
+        return "redirect:/admin/settings";
     }
 
     @GetMapping("/settings")
-    public String adminSettings() {
+    public String adminSettings(Model model) {
+        model.addAttribute("settings", settingsService.getSettings());
+
         return "adminSettings";
+    }
+
+    @PostMapping("/settings/save")
+    public String adminSettings(Settings settings) {
+        settingsService.saveSettings(settings);
+
+        return "redirect:/admin/settings";
     }
 
     @GetMapping("/images")

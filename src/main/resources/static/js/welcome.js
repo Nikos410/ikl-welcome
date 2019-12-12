@@ -96,7 +96,14 @@ function loadNextNews() {
 }
 
 // Initialize welcome screen
+let imageDisplayDuration;
+let newsDisplayDuration;
+
 $(document).ready(function () {
+    // Read durations
+    imageDisplayDuration = $('#imageDisplayDurationHolder').val() * 1000;
+    newsDisplayDuration = $('#newsDisplayDurationHolder').val() * 1000;
+
     // Initialize toasts
     $('.toast').toast();
 
@@ -116,6 +123,6 @@ $(document).ready(function () {
     displayNextSlide();
     displayNextNews();
 
-    setInterval(displayNextSlide, 6000);
-    setInterval(displayNextNews, 16000);
+    setInterval(displayNextSlide, imageDisplayDuration);
+    setInterval(displayNextNews, newsDisplayDuration);
 });
