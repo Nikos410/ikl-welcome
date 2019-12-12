@@ -26,7 +26,12 @@ public class AdminController {
 
     @GetMapping("")
     public String admin() {
-        return "redirect:/admin/images";
+        return "redirect:/admin/settins";
+    }
+
+    @GetMapping("/settings")
+    public String adminSettings() {
+        return "adminSettings"
     }
 
     @GetMapping("/images")
